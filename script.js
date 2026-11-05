@@ -386,4 +386,9 @@
   var startIdx = idxOf(location.hash.slice(1));
   curPage = startIdx >= 0 ? startIdx : 0;
   setup(true);
+
+  // PWA: офлайн жұмыс және телефонға орнату
+  if ('serviceWorker' in navigator && /^https?:$/.test(location.protocol)) {
+    window.addEventListener('load', function () { navigator.serviceWorker.register('sw.js').catch(function () {}); });
+  }
 })();

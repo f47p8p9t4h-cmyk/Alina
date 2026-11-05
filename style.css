@@ -210,3 +210,10 @@ html.js .book[data-mode="spread"] .page.rt .pager>[rel="next"]{order:2}
   .toc-btn.toc-abs{right:12px;bottom:12px}
 }
 @media(prefers-reduced-motion:reduce){html.js .book,.toc,.toc-backdrop{transition:none!important}}
+
+/* ---- қосымша ретінде ашылғанда (PWA) ---- */
+html,body{overscroll-behavior:none;-webkit-text-size-adjust:100%}
+@media(display-mode:standalone){
+  body{padding-top:env(safe-area-inset-top);padding-bottom:env(safe-area-inset-bottom)}
+  .menuBtn{top:calc(18px + env(safe-area-inset-top))}
+}
