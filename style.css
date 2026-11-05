@@ -1,0 +1,212 @@
+/* ===== Тоқтағул Алина — электронды портфолио (HTML + CSS + JavaScript: кітап сияқты парақ аудару) ===== */
+:root{
+  --bg:#cbbbaa; --paper:#fbf7f1; --sheet:#f5efe7; --card:#fffdf9;
+  --ink:#3e342d; --muted:#766a61; --line:#e3d8cc;
+  --teal:#354f52; --teal-dark:#263c3e; --teal-soft:#35585a; --mint:#dfe9e5;
+  --flip:1.05s cubic-bezier(.22,.61,.36,1);
+}
+*{box-sizing:border-box}
+html,body{margin:0;width:100%;height:100%;overflow:hidden;font-family:Arial,sans-serif;background:var(--bg);color:var(--ink)}
+body{display:flex;align-items:center;justify-content:center}
+a{color:inherit;text-decoration:none}
+.sr{position:fixed;opacity:0;pointer-events:none}
+
+/* ---- кітап ---- */
+.book{width:min(680px,82vw);height:min(900px,88vh);position:relative;perspective:2400px}
+.page{position:absolute;inset:0;background:var(--paper);border-radius:4px 18px 18px 4px;overflow:hidden;
+  box-shadow:inset 14px 0 24px rgba(70,50,35,.07);
+  transform-origin:left center;backface-visibility:hidden;will-change:transform;
+  transition:transform var(--flip),visibility 0s}
+html:not(.js) .book:has(.page:target) .page:target,html:not(.js) .book:not(:has(.page:target)) .cover{box-shadow:0 18px 45px rgba(50,38,28,.30),inset 14px 0 24px rgba(70,50,35,.07)}
+.page::after{content:"";position:absolute;right:0;top:0;bottom:0;width:28px;pointer-events:none;background:linear-gradient(to left,rgba(60,45,32,.12),transparent)}
+
+/* ---- мұқаба ---- */
+.cover{background:linear-gradient(135deg,#354f52 0%,#4d6666 55%,#8c6f5d 100%);color:#fffaf2;display:flex;align-items:center;justify-content:center;text-align:center}
+.cover-frame{border:1px solid rgba(255,255,255,.45);padding:60px 55px;width:76%;min-height:72%;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.cover img{width:150px;height:190px;object-fit:cover;border-radius:18px;margin-bottom:24px;box-shadow:0 10px 28px rgba(0,0,0,.3)}
+.cover h1{font-size:40px;margin:5px 0 12px}
+.cover p{font-size:17px;opacity:.92;margin:5px}
+.eyebrow{letter-spacing:3px;font-size:13px}
+.year{margin-top:30px;letter-spacing:3px;font-size:13px}
+.start{margin-top:26px;background:#fffaf2;color:var(--teal);padding:11px 22px;border-radius:12px;font-size:14px;box-shadow:0 5px 15px rgba(0,0,0,.2);transition:background .2s}
+.start:hover{background:var(--mint)}
+
+/* ---- ішкі бет ---- */
+.sheet{height:100%;overflow-y:auto;background:var(--sheet);display:flex;flex-direction:column}
+.wrap{padding:8px 34px 24px;flex:1}
+.title{color:var(--teal);margin-top:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:22px;margin:14px 0;box-shadow:0 8px 25px rgba(62,52,45,.08)}
+.card.hero{display:flex;gap:25px;align-items:center}
+.card.narrow{max-width:560px;margin:40px auto}
+.center{text-align:center}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:15px}
+.tile{display:block;background:var(--card);border:1px solid #ded1c5;border-radius:16px;padding:18px;transition:transform .2s,box-shadow .2s}
+a.tile:hover{transform:translateY(-3px);box-shadow:0 8px 20px rgba(62,52,45,.12)}
+.small{color:var(--muted);font-size:14px;line-height:1.6}
+.lead{line-height:1.8}
+.tag{display:inline-block;background:var(--mint);color:var(--teal-soft);padding:6px 10px;border-radius:20px;font-size:13px}
+h3{color:var(--teal-soft)}
+ul{line-height:1.8}
+.profile-photo{width:155px;min-width:155px;height:200px;object-fit:cover;border-radius:18px;box-shadow:0 8px 20px rgba(0,0,0,.12)}
+.contact-link{align-self:flex-start;margin:15px 15px 0;padding:10px 16px;border-radius:10px;font-size:14px;color:var(--teal-soft)}
+.contact-link:hover,.back:hover{text-decoration:underline}
+.back{display:inline-block;margin-bottom:6px;color:var(--teal-soft)}
+.contact-item{display:block;margin:18px 0;padding:16px 20px;border-radius:12px;background:#f1ece5;transition:background .2s}
+.contact-item:hover{background:var(--mint)}
+
+/* ---- әдебиет / видео ---- */
+.resource-box{margin-top:22px;background:#f8f3ed;border:1px solid #ded1c5;border-radius:16px;padding:20px}
+.resource-box h3{margin:0 0 12px}
+.resource-box ul{margin:8px 0 16px;padding-left:22px}
+.resource-box li{margin:8px 0;line-height:1.5}
+.resource-box a{color:var(--teal-soft);text-decoration:underline}
+.resource-box a.video{display:inline-block;background:var(--mint);padding:10px 14px;border-radius:10px;font-weight:600;text-decoration:none}
+
+/* ---- төменгі навигация ---- */
+.pager{position:sticky;bottom:0;display:flex;align-items:center;justify-content:space-between;gap:10px;padding:10px 16px;background:rgba(245,239,231,.94);border-top:1px solid var(--line);backdrop-filter:blur(4px)}
+.pg-count{font-size:13px;color:#55483f;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.pg-btn{flex:none;width:38px;height:38px;border-radius:12px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-size:22px;box-shadow:0 5px 15px rgba(0,0,0,.16);transition:background .2s}
+a.pg-btn:hover{background:var(--teal-dark)}
+.pg-btn.off{opacity:.35}
+
+/* ---- мәзір (checkbox тәсілі) ---- */
+.menuBtn{position:fixed;top:18px;left:20px;z-index:110;background:var(--teal);color:#fff;padding:11px 17px;border-radius:12px;cursor:pointer;font-size:14px;box-shadow:0 5px 15px rgba(0,0,0,.16)}
+.menuBtn:hover{background:var(--teal-dark)}
+.menuPanel{position:fixed;top:0;left:0;width:300px;height:100%;background:#eee4d8;z-index:200;transform:translateX(-105%);transition:transform .3s;box-shadow:10px 0 30px rgba(0,0,0,.2);padding:25px 18px;overflow:auto;visibility:hidden}
+.menuPanel h2{color:var(--teal);margin-top:10px}
+.menuPanel a{display:block;background:#fffaf5;margin:8px 0;padding:11px 13px;border-radius:10px;color:#4a4039;font-size:14px}
+.menuPanel a:hover{background:var(--mint)}
+.close{float:right;color:var(--teal);font-size:26px;line-height:1;cursor:pointer}
+.backdrop{position:fixed;inset:0;z-index:150;background:rgba(0,0,0,.25);opacity:0;pointer-events:none;transition:opacity .3s}
+#menu-toggle:checked ~ .menuPanel{transform:none;visibility:visible}
+#menu-toggle:checked ~ .backdrop{opacity:1;pointer-events:auto}
+#menu-toggle:focus-visible ~ .menuBtn{outline:3px solid var(--teal-soft);outline-offset:2px}
+
+/* ---- адаптив ---- */
+@media(max-width:700px){
+  .book{width:92vw;height:82vh;margin-top:6vh}
+  .cover-frame{width:88%;padding:30px 18px}
+  .cover h1{font-size:28px}.cover img{width:120px;height:155px}
+  .menuPanel{width:85vw}
+  .wrap{padding:8px 18px 20px}
+  .card.hero{flex-direction:column;text-align:center}
+}
+@media(prefers-reduced-motion:reduce){.page,.menuPanel,.backdrop{transition:none!important}}
+
+/* ===== Беттерді парақтау (JS-сіз): таңдалған беттің алдындағы беттер аударылады ===== */
+html:not(.js) .book:has(#home:target) .page:nth-child(-n+1),
+html:not(.js) .book:has(#course1:target) .page:nth-child(-n+2),
+html:not(.js) .book:has(#kot:target) .page:nth-child(-n+3),
+html:not(.js) .book:has(#mp:target) .page:nth-child(-n+4),
+html:not(.js) .book:has(#foreign:target) .page:nth-child(-n+5),
+html:not(.js) .book:has(#pe1:target) .page:nth-child(-n+6),
+html:not(.js) .book:has(#ict:target) .page:nth-child(-n+7),
+html:not(.js) .book:has(#course2:target) .page:nth-child(-n+8),
+html:not(.js) .book:has(#philosophy:target) .page:nth-child(-n+9),
+html:not(.js) .book:has(#pe2:target) .page:nth-child(-n+10),
+html:not(.js) .book:has(#cpp:target) .page:nth-child(-n+11),
+html:not(.js) .book:has(#statistics:target) .page:nth-child(-n+12),
+html:not(.js) .book:has(#business:target) .page:nth-child(-n+13),
+html:not(.js) .book:has(#coursework:target) .page:nth-child(-n+14),
+html:not(.js) .book:has(#course3:target) .page:nth-child(-n+15),
+html:not(.js) .book:has(#mobile:target) .page:nth-child(-n+16),
+html:not(.js) .book:has(#requirements:target) .page:nth-child(-n+17),
+html:not(.js) .book:has(#web:target) .page:nth-child(-n+18),
+html:not(.js) .book:has(#dbmodern:target) .page:nth-child(-n+19),
+html:not(.js) .book:has(#network:target) .page:nth-child(-n+20),
+html:not(.js) .book:has(#experience:target) .page:nth-child(-n+21),
+html:not(.js) .book:has(#skills:target) .page:nth-child(-n+22),
+html:not(.js) .book:has(#contact:target) .page:nth-child(-n+23){transform:rotateY(-180deg);visibility:hidden;pointer-events:none;transition:transform 1.05s cubic-bezier(.22,.61,.36,1),visibility 0s 1.05s}
+
+
+/* =====================================================================
+   ЖАҢА: шынайы кітап (script.js қосылғанда, <html class="js">)
+   Компьютерде — ашық кітап (екі бет қатар), телефонда — бір бет.
+   ===================================================================== */
+html.js .book{touch-action:pan-y;-webkit-tap-highlight-color:transparent}
+html.js .book[data-mode="spread"]{--pw:min(680px,46vw);width:calc(var(--pw)*2);height:min(900px,calc(100vh - 120px));
+  perspective:3200px;transform:translateX(var(--shift,0%));transition:transform .95s cubic-bezier(.4,.1,.2,1)}
+html.js .book.nt{transition:none!important}
+html.js .book[data-mode="single"]{perspective:2400px}
+
+html.js .leaf{position:absolute;top:0;height:100%;transform-style:preserve-3d;transform-origin:left center}
+html.js .leaf.moving{will-change:transform;pointer-events:none}
+html.js .book[data-mode="single"] .leaf{left:0;width:100%}
+html.js .book[data-mode="spread"] .leaf{left:50%;width:50%}
+
+html.js .leaf>.page{position:absolute;inset:0;z-index:auto!important;transition:none!important;transform:none;
+  backface-visibility:hidden;-webkit-backface-visibility:hidden;will-change:auto;cursor:pointer;
+  box-shadow:inset 14px 0 24px rgba(70,50,35,.07),0 24px 26px -22px rgba(50,38,28,.55)}
+html.js .book[data-mode="single"] .leaf>.page{box-shadow:inset 14px 0 24px rgba(70,50,35,.07),0 18px 45px rgba(50,38,28,.30)}
+html.js .leaf>.page.bk{transform:rotateY(180deg);transform-origin:center center}
+html.js .leaf>.page.lt{border-radius:18px 4px 4px 18px;
+  box-shadow:inset -14px 0 24px rgba(70,50,35,.09),0 24px 26px -22px rgba(50,38,28,.55)}
+html.js .leaf>.page.lt::after{right:auto;left:0;background:linear-gradient(to right,rgba(60,45,32,.12),transparent)}
+html.js .leaf>.page.blank{background:#f0e8de}
+html.js .leaf>.page.blank::after{display:none}
+
+/* парақ аударылғандағы көлеңке */
+html.js .page::before{content:"";position:absolute;inset:0;z-index:6;pointer-events:none;
+  background:linear-gradient(to right,rgba(36,24,14,calc(var(--shade,0)*.6)) 0%,rgba(36,24,14,calc(var(--shade,0)*.14)) 100%)}
+html.js .page.lt::before{background:linear-gradient(to left,rgba(36,24,14,calc(var(--shade,0)*.6)) 0%,rgba(36,24,14,calc(var(--shade,0)*.14)) 100%)}
+
+/* артқы мұқаба (кітаптың соңы) */
+html.js .backcover{position:absolute;left:50%;top:0;width:50%;height:100%;z-index:0;border-radius:4px 18px 18px 4px;
+  background:linear-gradient(135deg,#354f52 0%,#4d6666 55%,#8c6f5d 100%);color:#fffaf2;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;gap:14px;box-shadow:inset 14px 0 24px rgba(0,0,0,.18),0 24px 26px -22px rgba(50,38,28,.55)}
+html.js .backcover .bc-frame{border:1px solid rgba(255,255,255,.45);width:76%;padding:46px 24px;display:flex;flex-direction:column;align-items:center;gap:10px}
+html.js .backcover b{font-size:26px}
+html.js .backcover span{letter-spacing:3px;font-size:12px;opacity:.9}
+html.js .backcover button{margin-top:14px;border:0;background:#fffaf2;color:var(--teal);padding:10px 20px;border-radius:12px;font:inherit;font-size:14px;cursor:pointer;box-shadow:0 5px 15px rgba(0,0,0,.2)}
+html.js .backcover button:hover{background:var(--mint)}
+
+/* ---- «☰ Мазмұны» батырмасы ---- */
+.toc-btn{flex:none;border:1px solid #c5d6cf;background:var(--mint);color:var(--teal);font:inherit;font-size:12px;line-height:1;
+  padding:8px 11px;border-radius:10px;cursor:pointer;white-space:nowrap;box-shadow:0 2px 6px rgba(0,0,0,.08);transition:background .2s}
+.toc-btn:hover{background:#cfe0d9}
+.toc-btn:focus-visible,.toc-close:focus-visible,.toc-row:focus-visible{outline:3px solid var(--teal-soft);outline-offset:2px}
+html:not(.js) .toc-btn,html:not(.js) .toc,html:not(.js) .toc-backdrop{display:none}
+.toc-btn.toc-abs{position:absolute;right:18px;bottom:16px;background:rgba(255,250,242,.14);color:#fffaf2;border-color:rgba(255,255,255,.5);box-shadow:none}
+.toc-btn.toc-abs:hover{background:rgba(255,250,242,.28)}
+
+/* төменгі навигация: ‹ ☰ Мазмұны  нөмір  › */
+html.js .pager .pg-count{flex:1;min-width:0}
+html.js .pager>[rel="prev"]{order:0}
+html.js .pager>.toc-btn{order:1}
+html.js .pager>.pg-count{order:2}
+html.js .pager>[rel="next"],html.js .pager>.pg-btn.off{order:3}
+/* екі бет қатар: сыртқы бұрышта көрсеткі, ішкі (омыртқа жақ) бұрышта «Мазмұны» */
+html.js .book[data-mode="spread"] .page.lt .pager>.toc-btn{order:2}
+html.js .book[data-mode="spread"] .page.lt .pager>.pg-count{order:1}
+html.js .book[data-mode="spread"] .page.lt .pager>[rel="next"],
+html.js .book[data-mode="spread"] .page.lt .pager>.pg-btn.off{display:none}
+html.js .book[data-mode="spread"] .page.rt .pager>[rel="prev"]{display:none}
+html.js .book[data-mode="spread"] .page.rt .pager>.toc-btn{order:0}
+html.js .book[data-mode="spread"] .page.rt .pager>.pg-count{order:1}
+html.js .book[data-mode="spread"] .page.rt .pager>[rel="next"]{order:2}
+
+/* ---- Мазмұн мәзірі ---- */
+.toc-backdrop{position:fixed;inset:0;z-index:300;background:rgba(40,30,22,.4);opacity:0;transition:opacity .25s}
+.toc-backdrop.open{opacity:1}
+.toc{position:fixed;z-index:310;left:50%;top:50%;width:min(480px,92vw);max-height:84vh;overflow:auto;background:var(--sheet);
+  border:1px solid var(--line);border-radius:18px;padding:26px 24px 20px;box-shadow:0 24px 60px rgba(40,30,22,.35);
+  opacity:0;transform:translate(-50%,-46%) scale(.97);transition:opacity .25s,transform .25s}
+.toc.open{opacity:1;transform:translate(-50%,-50%)}
+.toc[hidden],.toc-backdrop[hidden]{display:none}
+.toc h2{margin:0 0 14px;color:var(--teal);text-align:center;font-size:24px}
+.toc-close{position:absolute;top:10px;right:14px;border:0;background:none;color:var(--teal);font-size:30px;line-height:1;cursor:pointer;padding:2px 8px}
+.toc-row{display:flex;align-items:baseline;gap:8px;padding:8px 10px;border-radius:10px;color:var(--ink);font-size:14px;line-height:1.35}
+.toc-row.top{font-weight:bold;margin-top:4px}
+.toc-row.sub{padding-left:30px;font-size:13px}
+.toc-row .t{min-width:0}
+.toc-row .d{flex:1;min-width:14px;border-bottom:2px dotted #c9bbab;transform:translateY(-3px)}
+.toc-row .n{color:var(--teal);font-weight:bold;font-variant-numeric:tabular-nums}
+.toc-row:hover{background:var(--mint)}
+.toc-row.cur{background:var(--mint);box-shadow:inset 3px 0 0 var(--teal)}
+
+@media(max-width:700px){
+  .toc-btn{font-size:11px;padding:7px 8px}
+  .pager{gap:6px;padding:10px 10px}
+  .toc-btn.toc-abs{right:12px;bottom:12px}
+}
+@media(prefers-reduced-motion:reduce){html.js .book,.toc,.toc-backdrop{transition:none!important}}
